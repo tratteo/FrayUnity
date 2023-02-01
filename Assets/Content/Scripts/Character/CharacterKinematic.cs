@@ -39,10 +39,7 @@ namespace Fray.Character
         /// </summary>
         public float GetRelativeTraslationSign(Vector3 vector) => Mathf.Sign(transform.localScale.x * vector.x);
 
-        public Vector3 AddExternalForce(Vector3 force)
-        {
-            return externalVelocity += force;
-        }
+        public Vector3 AddExternalForce(Vector3 force) => externalVelocity += force;
 
         public int GetResourcesAmount() => dodgesCharges;
 

@@ -12135,6 +12135,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2390312614970364328, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
+      propertyPath: groups.Array.data[0].isVisible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4077719515007302193, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
       propertyPath: m_RootOrder
       value: 2
