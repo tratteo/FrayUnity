@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Fray.Character
 {
-    public class CharacterKinematic : CharacterComponent, IManagedRigidbody, IMultiCooldownOwner
+    public class CharacterKinematic : CharacterComponent, IManagedRigidbody, IResourceCooldownOwner
     {
         [Header("Physics")]
         [SerializeField] private float movementSpeed = 5F;
@@ -67,17 +67,12 @@ namespace Fray.Character
                     break;
 
                 case CharacterAction.Dodge:
-                    if (IsDodging || dodgesCharges < 1 || Stamina.ValueSystem.Value < staminaRequired) return;
+
                     direction = data.CastPayload<Vector2>();
-                    if (Mathf.Approximately(direction.magnitude, 0F)) return;
-                    dodgeTimer = dodgeDuration;
-                    dodgesCharges--;
-                    if (!rechargeDodgesJob.Active)
-                    {
-                        rechargeDodgesJob.Resume();
-                    }
-                    Stamina.ValueSystem.Decrease(staminaRequired);
-                    Rigidbody.AddManagedForce2D(direction * dodgeForce);
+                    if (!CanDodge() || Mathf.Approximately(direction.magnitude, 0F)) return;
+
+                    Dodge(direction);
+
                     if (GetRelativeTraslationSign(direction) > 0F)
                     {
                         Animator?.DriveAnimation(new AnimatorDriverData(AnimatorDriverSystem.DashForward));
@@ -94,7 +89,6 @@ namespace Fray.Character
         {
             // Dodge
             rechargeDodgesJob.Step(Time.deltaTime);
-            if (dodgesCharges >= dodgesCount) rechargeDodgesJob.Suspend();
             if (IsDodging)
             {
                 dodgeTimer -= Time.deltaTime;
@@ -125,6 +119,17 @@ namespace Fray.Character
         {
             crosshair.SetParent(null);
             dodgesCharges = dodgesCount;
+        }
+
+        private bool CanDodge() => !IsDodging && dodgesCharges >= 1 && Stamina.ValueSystem.Value >= staminaRequired;
+
+        private void Dodge(Vector2 direction)
+        {
+            if (!CanDodge()) return;
+            Stamina.ValueSystem.Decrease(staminaRequired);
+            Rigidbody.AddManagedForce2D(direction * dodgeForce);
+            dodgeTimer = dodgeDuration;
+            dodgesCharges--;
         }
 
         private void RechargeDodge()

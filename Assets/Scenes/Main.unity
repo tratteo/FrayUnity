@@ -11873,7 +11873,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visible: 1
-  importance: 0.431
+  importance: 0.25
 --- !u!212 &864739773
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12137,6 +12137,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2390312614970364328, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
       propertyPath: groups.Array.data[0].isVisible
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2390312614970364328, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
+      propertyPath: groups.Array.data[1].isVisible
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2390312614970364328, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
+      propertyPath: groups.Array.data[2].isVisible
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4077719515007302193, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
@@ -12186,6 +12194,10 @@ PrefabInstance:
     - target: {fileID: 4077719515007302195, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
       propertyPath: m_Name
       value: Character
+      objectReference: {fileID: 0}
+    - target: {fileID: 5185232038793578102, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
+      propertyPath: exhaustInhibit
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

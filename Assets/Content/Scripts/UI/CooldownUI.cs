@@ -19,14 +19,8 @@ namespace Fray.UI
 
         private void Awake()
         {
-            if (!image)
-            {
-                image = GetComponent<Image>();
-            }
-            if (!amountText)
-            {
-                amountText = GetComponentInChildren<TMP_Text>();
-            }
+            if (!image) image = GetComponent<Image>();
+            if (!amountText) amountText = GetComponentInChildren<TMP_Text>();
             if (preBinded.Value != null)
             {
                 Bind(preBinded.Value);
@@ -38,7 +32,8 @@ namespace Fray.UI
             if (cooldownHolder != null)
             {
                 image.fillAmount = cooldownHolder.GetCooldownPercentage();
-                amountText.text = cooldownHolder is IMultiCooldownOwner multiCooldown && amountText ? multiCooldown.GetResourcesAmount().ToString() : "";
+                amountText.text = cooldownHolder is IResourceCooldownOwner multiCooldown
+                    && amountText ? multiCooldown.GetResourcesAmount().ToString() : "";
             }
         }
     }

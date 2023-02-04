@@ -48,8 +48,11 @@ namespace Fray.Character
 
         private void OnDetected(IEnumerable<Collider2D> objs)
         {
+            // Add the targets set in the editor (ourselves and others)
             targets.Clear();
             targets.AddRange(initialTargets);
+
+            // Add all elements of interest
             foreach (var obj in objs)
             {
                 if (obj.TryGetComponent<IElementOfInterest>(out var element) && element.Visible)
@@ -62,6 +65,7 @@ namespace Fray.Character
                     });
                 }
             }
+            // Set the targets of our CinemachineTargetGroup
             targetGroup.m_Targets = targets.ToArray();
         }
 

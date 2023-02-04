@@ -3,7 +3,7 @@
     /// <summary>
     ///   Has multiple cooldowns (charges)
     /// </summary>
-    public interface IMultiCooldownOwner : ICooldownOwner
+    public interface IResourceCooldownOwner : ICooldownOwner
     {
         int GetResourcesAmount();
     }
