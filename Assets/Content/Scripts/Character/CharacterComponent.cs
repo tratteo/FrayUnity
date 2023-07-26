@@ -16,7 +16,11 @@ namespace Fray.Character
 
         public StaminaSystem Stamina { get; private set; }
 
+        public HealthSystem Health { get; private set; }
+
         public bool Enabled { get; private set; }
+
+        protected ICharacterInputSystem Input => input;
 
         protected AnimatorDriverSystem Animator { get; private set; }
 
@@ -38,6 +42,7 @@ namespace Fray.Character
         protected virtual void Awake()
         {
             Stamina = GetComponent<StaminaSystem>();
+            Health = GetComponent<HealthSystem>();
             Animator = GetComponent<AnimatorDriverSystem>();
             input = GetComponent<ICharacterInputSystem>();
             Rigidbody = GetComponent<Rigidbody2D>();

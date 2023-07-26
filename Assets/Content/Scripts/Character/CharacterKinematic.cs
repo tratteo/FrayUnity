@@ -121,12 +121,12 @@ namespace Fray.Character
             dodgesCharges = dodgesCount;
         }
 
-        private bool CanDodge() => !IsDodging && dodgesCharges >= 1 && Stamina.ValueSystem.Value >= staminaRequired;
+        private bool CanDodge() => !IsDodging && dodgesCharges >= 1 && Stamina.Value >= staminaRequired;
 
         private void Dodge(Vector2 direction)
         {
             if (!CanDodge()) return;
-            Stamina.ValueSystem.Decrease(staminaRequired);
+            Stamina.Decrease(staminaRequired);
             Rigidbody.AddManagedForce2D(direction * dodgeForce);
             dodgeTimer = dodgeDuration;
             dodgesCharges--;

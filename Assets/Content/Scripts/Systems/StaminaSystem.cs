@@ -1,5 +1,6 @@
 ﻿using GibFrame;
 using GibFrame.Performance;
+using System;
 using UnityEngine;
 
 namespace Fray.Systems
@@ -10,14 +11,28 @@ namespace Fray.Systems
         [SerializeField] private float tickRate = 0.25F;
         private UpdateJob rechargeJob;
 
-        public ValueSystem ValueSystem => System;
+        public event Action<float, GameObject> OnIncrease = delegate { };
+
+        public event Action<float, GameObject> OnDecrease = delegate { };
+
+        public void Decrease(float value, GameObject subject = null)
+        {
+            System.Decrease(value);
+            OnDecrease(value, subject);
+        }
+
+        public void Increase(float value, GameObject subject = null)
+        {
+            System.Increase(value);
+            OnIncrease(value, subject);
+        }
 
         private void Start()
         {
             rechargeJob = new UpdateJob(new Callback(Recharge), tickRate);
         }
 
-        private void Recharge() => System.Increase(staminaPerTick);
+        private void Recharge() => Increase(staminaPerTick);
 
         private void Update()
         {

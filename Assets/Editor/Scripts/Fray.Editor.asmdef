@@ -1,0 +1,18 @@
+{
+    "name": "Fray.Editor",
+    "rootNamespace": "Fray.Editor",
+    "references": [
+        "GUID:7bc76361154f648449ce456185b20968"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

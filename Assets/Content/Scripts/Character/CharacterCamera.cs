@@ -14,6 +14,24 @@ namespace Fray.Character
         private CinemachineTargetGroup targetGroup;
         private CinemachineTargetGroup.Target[] initialTargets;
 
+        //public void ClientShakeCamera(ShakeStrenght strenght)
+        //{
+        //    var shake = GetShakeByStrenght(strenght);
+        //    if (!Enabled) return;
+
+        //    noise.m_NoiseProfile = shake.Profile;
+        //    noise.m_AmplitudeGain = shake.Amplitude;
+        //    noise.m_FrequencyGain = shake.Frequency;
+        //    shakeDuration = shake.Duration;
+        //    //Vector2 screenPos = mainCamera.WorldToViewportPoint(shake.WorldPos);
+        //    //if (screenPos.x > 0F && screenPos.x < 1F && screenPos.y > 0F && screenPos.y < 1F)
+        //    //{
+        //    //    noise.m_AmplitudeGain = shake.Params.Amplitude;
+        //    //    noise.m_FrequencyGain = shake.Params.Frequency;
+        //    //    shakeDuration = shake.Params.Duration;
+        //    //}
+        //}
+
         protected override void OnEnable()
         {
             base.OnEnable();

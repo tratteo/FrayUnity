@@ -1,0 +1,11 @@
+{
+  "guard_validator_guid": "50fef8fdcd5fda642a4c3b96e9514d1b",
+  "secure_build_pipeline": false,
+  "build_validate": true,
+  "build_validate_guards": true,
+  "warning_color": "FFD9B233",
+  "error_color": "FFBF394C",
+  "success_color": "FF47CC40",
+  "log_color": "FFCCCCCC",
+  "log_font_size": 12
+}

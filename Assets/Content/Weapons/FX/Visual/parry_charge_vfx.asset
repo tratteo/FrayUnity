@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8009ab01a80964da5531be40263c4b, type: 3}
+  m_Name: parry_charge_vfx
+  m_EditorClassIdentifier: 
+  effectPrefab: {fileID: 2925865290223613865, guid: 74b2164c3c2e26145a273820a216ddd3, type: 3}
+  disposePolicy: 1
+  replaceAttachment: 0

@@ -1,11 +1,12 @@
 ﻿using Fray.Input;
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Fray.Character.Input
 {
     public enum CharacterAction
-    { Move, Look, Dodge }
+    { Move, Look, Dodge, Attack, Parry }
 
     public class CharacterInputSystem : MonoBehaviour, ICharacterInputSystem
     {
@@ -28,6 +29,13 @@ namespace Fray.Character.Input
         {
             input.Enable();
             input.Dodge.performed += DodgeCallback;
+            input.Attack.performed += AttackCallback;
+        }
+
+        private void AttackCallback(InputAction.CallbackContext context)
+        {
+            if (!input.enabled || !context.performed) return;
+            InputEvent?.Invoke(new CharacterInputData(CharacterAction.Attack));
         }
 
         private void DodgeCallback(UnityEngine.InputSystem.InputAction.CallbackContext context)
