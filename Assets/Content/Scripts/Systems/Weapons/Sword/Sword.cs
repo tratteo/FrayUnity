@@ -27,7 +27,7 @@ namespace Fray.Weapons
         [Header("Parameters")]
         [SerializeField] private float baseDamage = 50F;
         [Header("FX")]
-        [SerializeField, Guard] private SwordFxGroup fxSuite;
+        [SerializeField, Guard] private FxSuite fxSuite;
         [SerializeField, Guard] private VfxSocket vfxSocket;
         [Header("Collider")]
         [SerializeField] private int colliderQuality = 5;
@@ -131,7 +131,7 @@ namespace Fray.Weapons
         protected override void TriggerBehaviour(params object[] args)
         {
             var attack = baseAttack;
-            if (parentStamina is not null)
+            if (parentStamina != null)
             {
                 if (parentStamina.Value < attack.StaminaRequired) return;
                 parentStamina.Decrease(attack.StaminaRequired, gameObject);

@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Fray.FX
 {
-    [CreateAssetMenu(menuName = "FX/Sound", fileName = "sound_fx")]
-    public class SoundFx : ScriptableObject
+    [CreateAssetMenu(menuName = "Fray/FX/Sound", fileName = "sound_fx")]
+    public class Sfx : ScriptableObject
     {
         [SerializeField] private AudioClip[] clips;
         [SerializeField] private RandomizedFloat volume;

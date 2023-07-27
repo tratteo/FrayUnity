@@ -5,7 +5,7 @@ namespace Fray.Weapons
     /// <summary>
     ///   <see cref="ScriptableObject"/> defining parry statistics for a <see cref="Sword"/>
     /// </summary>
-    [CreateAssetMenu(fileName = "parry", menuName = "Fray/Sword parry")]
+    [CreateAssetMenu(fileName = "parry", menuName = "Fray/Weapons/Parry")]
     public class Parry : ScriptableObject
     {
         [SerializeField] private float stamina = 15F;

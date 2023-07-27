@@ -1,15 +1,27 @@
 ﻿using Fray.Character.Input;
 using Fray.Extensions;
+using Fray.FX;
 using Fray.Systems;
 using GibFrame;
 using GibFrame.Extensions;
 using GibFrame.Performance;
+using System;
 using UnityEngine;
 
 namespace Fray.Character
 {
     public class CharacterKinematic : CharacterComponent, IManagedRigidbody, IResourceCooldownOwner
     {
+        private readonly Lazy<VfxHandler.Options> footstepsVfxOpt = new Lazy<VfxHandler.Options>(() => new VfxHandler.Options()
+        {
+            spatial = new VfxHandler.Options.Spatial() { simulationSpace = ParticleSystemSimulationSpace.World },
+            attachment = new VfxHandler.Options.Attachment() { parentAttachment = VfxHandler.Options.Attachment.ParentAttachment.None }
+        });
+        private readonly Lazy<VfxHandler.Options> dashVfxOpt = new Lazy<VfxHandler.Options>(() => new VfxHandler.Options()
+        {
+            spatial = new VfxHandler.Options.Spatial() { simulationSpace = ParticleSystemSimulationSpace.World },
+            attachment = new VfxHandler.Options.Attachment() { parentAttachment = VfxHandler.Options.Attachment.ParentAttachment.None }
+        });
         [Header("Physics")]
         [SerializeField] private float movementSpeed = 5F;
         [Range(0F, 1F), SerializeField] private float forceDampening = 0.1F;
@@ -21,9 +33,17 @@ namespace Fray.Character
         [SerializeField] private float dodgeCooldown = 4F;
         [Header("Look")]
         [SerializeField] private Transform crosshair;
+        [Header("FX")]
+        [SerializeField] private Optional<VfxHandler> dashVfx;
+        [SerializeField] private Optional<SfxHandler> dashSfx;
+        [SerializeField] private Optional<VfxHandler> footstepsVfx;
+        [SerializeField] private Optional<SfxHandler> footstepsSfx;
 
         private Vector2 traslation;
         private Vector3 externalVelocity = Vector2.zero;
+        private float distanceTraveled = 0F;
+        private float lastUpdateStepDistance = 0F;
+        private Vector3 lastPos = Vector3.zero;
 
         private int dodgesCharges = 0;
         private UpdateJob rechargeDodgesJob;
@@ -72,7 +92,11 @@ namespace Fray.Character
                     if (!CanDodge() || Mathf.Approximately(direction.magnitude, 0F)) return;
 
                     Dodge(direction);
-
+                    dashVfxOpt.Value.spatial.position = transform.position;
+                    dashVfxOpt.Value.spatial.direction = externalVelocity;
+                    dashVfx.Try(vfx => vfx.Display(this, dashVfxOpt.Value));
+                    dashVfx.Try(vfx => vfx.Display(this, dashVfxOpt.Value));
+                    dashSfx.Try(sfx => sfx.Play(this));
                     if (GetRelativeTraslationSign(direction) > 0F)
                     {
                         Animator?.DriveAnimation(new AnimatorDriverData(AnimatorDriverSystem.DashForward));
@@ -107,6 +131,17 @@ namespace Fray.Character
             {
                 Animator?.DriveAnimation(new AnimatorDriverData(AnimatorDriverSystem.Run, false, GetRelativeTraslationSign(traslation)));
             }
+
+            if (lastUpdateStepDistance > (movementSpeed * Time.deltaTime / 1.75F))
+            {
+                if (UnityEngine.Random.value < 0.01)
+                {
+                    footstepsVfxOpt.Value.spatial.position = transform.position;
+                    footstepsVfxOpt.Value.spatial.direction = Rigidbody.velocity;
+                    footstepsVfxOpt.Value.spatial.flip = Rigidbody.velocity.x < 0 ? Vector3.zero : Vector3.right;
+                    footstepsVfx.Try(v => v.Display(this, footstepsVfxOpt.Value));
+                }
+            }
         }
 
         protected override void Awake()
@@ -119,6 +154,10 @@ namespace Fray.Character
         {
             crosshair.SetParent(null);
             dodgesCharges = dodgesCount;
+            if (Animator)
+            {
+                Animator.FootstepEvent += () => footstepsSfx.Try(s => s.Play(this));
+            }
         }
 
         private bool CanDodge() => !IsDodging && dodgesCharges >= 1 && Stamina.Value >= staminaRequired;
@@ -142,6 +181,9 @@ namespace Fray.Character
 
         private void FixedUpdate()
         {
+            lastUpdateStepDistance = Vector3.Distance(transform.position, lastPos);
+            distanceTraveled += lastUpdateStepDistance;
+            lastPos = transform.position;
             // Slowly reduce the external force
             externalVelocity = Vector2.Lerp(externalVelocity, Vector2.zero, forceDampening);
             Rigidbody.velocity = externalVelocity;

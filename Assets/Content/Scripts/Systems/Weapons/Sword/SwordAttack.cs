@@ -5,7 +5,7 @@ namespace Fray.Weapons
     /// <summary>
     ///   <see cref="ScriptableObject"/> defining an attack that can be performed with a <see cref="Sword"/>
     /// </summary>
-    [CreateAssetMenu(fileName = "sword_atk", menuName = "Fray/Sword attack")]
+    [CreateAssetMenu(fileName = "sword_atk", menuName = "Fray/Weapons/Sword attack")]
     public class SwordAttack : ScriptableObject
     {
         public const short BaseAttack = 0x0;

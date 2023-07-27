@@ -22,6 +22,7 @@ namespace Fray.Systems
         public T GetArgAs<T>() => (T)arg;
     }
 
+    [RequireComponent(typeof(Animator))]
     public class AnimatorDriverSystem : MonoBehaviour
     {
         public const string Run = "run";

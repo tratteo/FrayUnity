@@ -8,7 +8,7 @@ namespace Fray.FX
     [Serializable]
     public class SfxHandler : IDisposable, IOptional
     {
-        [SerializeField, Guard] private SoundFx fx;
+        [SerializeField, Guard] private Sfx fx;
         private AudioSource source;
         private bool cached = false;
 

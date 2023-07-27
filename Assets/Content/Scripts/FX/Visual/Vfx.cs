@@ -6,7 +6,7 @@ namespace Fray.FX
     /// <summary>
     ///   The actual object representing a VFX. Managed by <see cref="VfxHandler"/>
     /// </summary>
-    [CreateAssetMenu(menuName = "FX/Visual", fileName = "visual_vfx")]
+    [CreateAssetMenu(menuName = "Fray/FX/Visual", fileName = "visual_vfx")]
     public class Vfx : ScriptableObject
     {
         public enum DisposePolicy
