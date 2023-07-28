@@ -61,6 +61,8 @@ namespace Fray.Terrain
             }
             mat = Terrain.Erode(mat, erosionKernelSize);
             mat = Terrain.Dilate(mat, dilationKernelSize);
+            var b = Terrain.FloodFill(mat);
+            Debug.Log(b);
             return mat;
         }
     }
