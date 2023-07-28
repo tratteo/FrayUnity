@@ -11,6 +11,7 @@ namespace Fray.Terrain
         [SerializeField] private int dilationKernelSize = 3;
         [SerializeField] private int erosionKernelSize = 3;
         [SerializeField, Range(0F, 1F)] private float fillPercentage = 0.5F;
+        [SerializeField] private bool denselyConnect = true;
         private int drunkX;
         private int drunkY;
 
@@ -18,8 +19,15 @@ namespace Fray.Terrain
         {
             var width = mat.GetLength(0);
             var height = mat.GetLength(1);
-            drunkX = (width - 1) / 2;
-            drunkY = (height - 1) / 2;
+            drunkX = width / 2;
+            drunkY = height / 2;
+            for (int i = drunkX - 2; i <= drunkX + 2; i++)
+            {
+                for (int j = drunkY - 2; j <= drunkY + 2; j++)
+                {
+                    mat[i, j] = 0;
+                }
+            }
             var occupied = 0;
             while (occupied < mat.Length * fillPercentage)
             {
@@ -61,8 +69,11 @@ namespace Fray.Terrain
             }
             mat = Terrain.Erode(mat, erosionKernelSize);
             mat = Terrain.Dilate(mat, dilationKernelSize);
-            var b = Terrain.FloodFill(mat);
-            Debug.Log(b);
+            if (denselyConnect)
+            {
+                mat = Terrain.PruneNotConnected(mat);
+            }
+
             return mat;
         }
     }

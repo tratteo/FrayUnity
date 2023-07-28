@@ -6,30 +6,35 @@ namespace Fray.Terrain
 {
     internal static class Terrain
     {
-        public static bool[,] FloodFill(int[,] mat)
+        public static int[,] PruneNotConnected(int[,] mat)
         {
             var width = mat.GetLength(0);
             var height = mat.GetLength(1);
-            bool[,] res = new bool[width, height];
+            bool[,] visited = new bool[width, height];
 
             var q = new Queue<Vector2Int>();
             q.Enqueue(new Vector2Int(width / 2, height / 2));
-            while (q.Count > 0)
+            while (q.TryDequeue(out var c))
             {
-                var c = q.Dequeue();
-                if (mat[c.x, c.y] != 0) continue;
-                res[c.x, c.y] = true;
-                for (var i = c.x - 1; i <= c.x + 1; i++)
+                if (c.x < 0 || c.x >= width || c.y < 0 || c.y >= height || mat[c.x, c.y] != 0 || visited[c.x, c.y] == true) continue;
+                visited[c.x, c.y] = true;
+                q.Enqueue(new Vector2Int(c.x + 1, c.y));
+                q.Enqueue(new Vector2Int(c.x - 1, c.y));
+                q.Enqueue(new Vector2Int(c.x, c.y - 1));
+                q.Enqueue(new Vector2Int(c.x, c.y + 1));
+            }
+            int[,] res = new int[width, height];
+            Array.Copy(mat, res, mat.Length);
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
                 {
-                    for (var j = c.y - 1; j <= c.y + 1; j++)
+                    if (!visited[i, j])
                     {
-                        if (i == c.x || j == c.y) continue;
-                        if (i < 0 || i >= width || j < 0 || j >= height) continue;
-                        q.Enqueue(new Vector2Int(i, j));
+                        res[i, j] = 1;
                     }
                 }
             }
-
             return res;
         }
 

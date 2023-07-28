@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bdc354d7e14a98449b75d5c82deeac2, type: 3}
   m_Name: drunkwalk_bimatrix_composer
   m_EditorClassIdentifier: 
-  drunkardMaxDistance: {x: 5, y: 15}
-  randomDrunkardPosProb: 0.0075
-  dilationKernelSize: 5
-  erosionKernelSize: 7
-  fillPercentage: 0.398
+  drunkardMaxDistance: {x: 2, y: 5}
+  randomDrunkardPosProb: 0.005
+  dilationKernelSize: 3
+  erosionKernelSize: 5
+  fillPercentage: 0.348
+  denselyConnect: 1
