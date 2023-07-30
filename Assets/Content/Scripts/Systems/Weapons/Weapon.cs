@@ -131,7 +131,7 @@ namespace Fray.Systems.Weapons
 
         #region Attachment
 
-        public static bool TryApply(Weapon weapon, GameObject target) => Applicator.TryApply(weapon, target, out var _, wpn => wpn.SetOwner(target));
+        public static bool TryApply<T>(T weapon, GameObject target, out T instance) where T : Weapon => Applicator.TryApply(weapon, target, out instance, wpn => wpn.SetOwner(target));
 
         public bool CanBeApplied(Weapon payload, GameObject target) => target.TryGetComponent<IWeaponOwner>(out var _);
 

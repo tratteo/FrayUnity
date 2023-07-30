@@ -221,7 +221,27 @@ MonoBehaviour:
   baseAttack: {fileID: 11400000, guid: f3467242caecfa54688c31fad931fba1, type: 2}
   parry: {fileID: 11400000, guid: c219511378f9d5f458a21bd128e37871, type: 2}
   baseDamage: 50
-  fxSuite: {fileID: 11400000, guid: bd29d38e7a603ba4792a9e013b219d21, type: 2}
+  chargeParryVfx:
+    obj:
+      fx: {fileID: 11400000, guid: 044056119415a8e48af30c5f0cde7af9, type: 2}
+  attackVfx:
+    obj:
+      fx: {fileID: 11400000, guid: ef329c080508fa54dbdfb5ee5c885130, type: 2}
+  chargeVfx:
+    obj:
+      fx: {fileID: 11400000, guid: 77439564a866ed549a585d810d2ffa8d, type: 2}
+  parryVfx:
+    obj:
+      fx: {fileID: 11400000, guid: 72fe096e0fdefdc48a3339e29c6968ec, type: 2}
+  hitSfx:
+    obj:
+      fx: {fileID: 11400000, guid: 050ea3f898eb4534e9850c1d8fcfc3bf, type: 2}
+  missSfx:
+    obj:
+      fx: {fileID: 11400000, guid: b790af18fea46e1499bdd22bd293bc16, type: 2}
+  parrySfx:
+    obj:
+      fx: {fileID: 11400000, guid: 8c87230cb1d343d4bb203466483b51e2, type: 2}
   vfxSocket: {fileID: 752596147559628664}
   colliderQuality: 5
 --- !u!114 &5685979017796404714

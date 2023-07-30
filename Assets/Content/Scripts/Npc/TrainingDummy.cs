@@ -1,4 +1,5 @@
 using Fray.Systems;
+using Fray.Systems.Animation;
 using Fray.Systems.Weapons;
 using GibFrame;
 using GibFrame.Data;
@@ -86,7 +87,7 @@ namespace Fray.Npc
             }
             if (weaponPrefab)
             {
-                var res = Weapon.TryApply(weaponPrefab.GetComponent<Weapon>(), gameObject);
+                var res = Weapon.TryApply(weaponPrefab.GetComponent<Weapon>(), gameObject, out var _);
             }
         }
 

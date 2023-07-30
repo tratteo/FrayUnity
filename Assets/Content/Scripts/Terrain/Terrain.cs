@@ -38,15 +38,15 @@ namespace Fray.Terrain
             return res;
         }
 
-        public static int[,] Erode(int[,] mat, int kernelSize)
+        public static int[,] Erode(int[,] mat, int kernelSize, int border = 0)
         {
             var width = mat.GetLength(0);
             var height = mat.GetLength(1);
             int[,] res = new int[width, height];
             Array.Copy(mat, res, mat.Length);
-            for (int i = kernelSize / 2; i < width - kernelSize / 2; i++)
+            for (int i = kernelSize / 2 + border; i < width - kernelSize / 2 - border; i++)
             {
-                for (int j = kernelSize / 2; j < height - kernelSize / 2; j++)
+                for (int j = kernelSize / 2 + border; j < height - kernelSize / 2 - border; j++)
                 {
                     if (mat[i, j] != 0) res[i, j] = mat[i, j];
                     else
@@ -64,15 +64,15 @@ namespace Fray.Terrain
             return res;
         }
 
-        public static int[,] Dilate(int[,] mat, int kernelSize)
+        public static int[,] Dilate(int[,] mat, int kernelSize, int border = 0)
         {
             var width = mat.GetLength(0);
             var height = mat.GetLength(1);
             int[,] res = new int[width, height];
             Array.Copy(mat, res, mat.Length);
-            for (int i = kernelSize / 2; i < width - kernelSize / 2; i++)
+            for (int i = kernelSize / 2 + border; i < width - kernelSize / 2 - border; i++)
             {
-                for (int j = kernelSize / 2; j < height - kernelSize / 2; j++)
+                for (int j = kernelSize / 2 + border; j < height - kernelSize / 2 - border; j++)
                 {
                     if (mat[i, j] != 1) res[i, j] = mat[i, j];
                     else

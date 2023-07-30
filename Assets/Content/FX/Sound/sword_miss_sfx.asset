@@ -18,5 +18,5 @@ MonoBehaviour:
     min: 0.4
     max: 0.4
   pitch:
-    min: 2.5
-    max: 3.5
+    min: 1.25
+    max: 2

@@ -669,7 +669,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1796094391
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9cde5268a9a8c8c429dee24146e1c2f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1176,9 +1176,10 @@ GameObject:
   - component: {fileID: 4581201821338841509}
   - component: {fileID: 8827194689065863431}
   - component: {fileID: 4529422357137483973}
+  - component: {fileID: 1822800583840875484}
   m_Layer: 0
   m_Name: chad
-  m_TagString: Untagged
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1224,6 +1225,7 @@ MonoBehaviour:
     - {fileID: 6493635550010716243}
     - {fileID: 1649590723027457142}
     - {fileID: 8827194689065863431}
+    - {fileID: 1822800583840875484}
   - name: Animation
     isVisible: 0
     isEditable: 0
@@ -1231,16 +1233,20 @@ MonoBehaviour:
     - {fileID: 3663266018298567588}
     - {fileID: 7267100658254309227}
   - name: Functionalities
-    isVisible: 1
+    isVisible: 0
     isEditable: 0
     components:
     - {fileID: 8117462937594497166}
-    - {fileID: 3685663751179421847}
-    - {fileID: 4581201821338841509}
     - {fileID: 7569106690881876520}
     - {fileID: 4529422357137483973}
-    - {fileID: 5996862877638412796}
     - {fileID: 2024711657874428831}
+  - name: Components
+    isVisible: 1
+    isEditable: 0
+    components:
+    - {fileID: 4581201821338841509}
+    - {fileID: 5996862877638412796}
+    - {fileID: 3685663751179421847}
 --- !u!212 &6493635550010716243
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1367,7 +1373,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 7
-  forceDampening: 0.125
   staminaRequired: 20
   dodgeForce: 2000
   dodgeDuration: 0.3
@@ -1498,8 +1503,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.25}
-  m_Size: {x: 1.25, y: 2.25}
+  m_Offset: {x: 0, y: -0.5}
+  m_Size: {x: 1.25, y: 2}
   m_Direction: 0
 --- !u!114 &4529422357137483973
 MonoBehaviour:
@@ -1524,6 +1529,19 @@ MonoBehaviour:
   enabledOnStart: 1
   paradigm: 2
   radius: 6
+--- !u!114 &1822800583840875484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4661936600061874486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0aca5e6f1e53a1240ba47aab6b8266a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceDampening: 0.1
 --- !u!1 &5959273517646210796
 GameObject:
   m_ObjectHideFlags: 0

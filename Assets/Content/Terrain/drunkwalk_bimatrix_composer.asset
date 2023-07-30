@@ -17,4 +17,5 @@ MonoBehaviour:
   dilationKernelSize: 3
   erosionKernelSize: 5
   fillPercentage: 0.348
+  border: 2
   denselyConnect: 1

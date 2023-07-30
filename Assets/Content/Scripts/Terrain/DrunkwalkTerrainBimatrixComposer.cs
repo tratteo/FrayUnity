@@ -11,6 +11,7 @@ namespace Fray.Terrain
         [SerializeField] private int dilationKernelSize = 3;
         [SerializeField] private int erosionKernelSize = 3;
         [SerializeField, Range(0F, 1F)] private float fillPercentage = 0.5F;
+        [SerializeField] private int border = 2;
         [SerializeField] private bool denselyConnect = true;
         private int drunkX;
         private int drunkY;
@@ -39,21 +40,22 @@ namespace Fray.Terrain
                     switch (dir)
                     {
                         case 0:
-                            drunkY = Mathf.Clamp(drunkY + 1, 0, height - 1);
+                            drunkY = Mathf.Clamp(drunkY + 1, border, height - 1 - border);
                             break;
 
                         case 1:
-                            drunkY = Mathf.Clamp(drunkY - 1, 0, height - 1);
+                            drunkY = Mathf.Clamp(drunkY - 1, border, height - 1 - border);
                             break;
 
                         case 2:
-                            drunkX = Mathf.Clamp(drunkX + 1, 0, width - 1);
+                            drunkX = Mathf.Clamp(drunkX + 1, border, width - 1 - border);
                             break;
 
                         case 3:
-                            drunkX = Mathf.Clamp(drunkX - 1, 0, width - 1);
+                            drunkX = Mathf.Clamp(drunkX - 1, border, width - 1 - border);
                             break;
                     }
+
                     if (mat[drunkX, drunkY] != 0)
                     {
                         occupied++;
@@ -67,8 +69,8 @@ namespace Fray.Terrain
                     }
                 }
             }
-            mat = Terrain.Erode(mat, erosionKernelSize);
-            mat = Terrain.Dilate(mat, dilationKernelSize);
+            mat = Terrain.Erode(mat, erosionKernelSize, border: border);
+            mat = Terrain.Dilate(mat, dilationKernelSize, border: border);
             if (denselyConnect)
             {
                 mat = Terrain.PruneNotConnected(mat);

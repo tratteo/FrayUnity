@@ -27,7 +27,15 @@ namespace Fray.Weapons
         [Header("Parameters")]
         [SerializeField] private float baseDamage = 50F;
         [Header("FX")]
-        [SerializeField, Guard] private FxSuite fxSuite;
+        [Header("Visual")]
+        [SerializeField] private Optional<VfxHandler> chargeParryVfx;
+        [SerializeField] private Optional<VfxHandler> attackVfx;
+        [SerializeField] private Optional<VfxHandler> chargeVfx;
+        [SerializeField] private Optional<VfxHandler> parryVfx;
+        [Header("Sound")]
+        [SerializeField] private Optional<SfxHandler> hitSfx;
+        [SerializeField] private Optional<SfxHandler> missSfx;
+        [SerializeField] private Optional<SfxHandler> parrySfx;
         [SerializeField, Guard] private VfxSocket vfxSocket;
         [Header("Collider")]
         [SerializeField] private int colliderQuality = 5;
@@ -57,16 +65,13 @@ namespace Fray.Weapons
         public override void Update()
         {
             base.Update();
-            if (fxSuite != null)
+            if (!IsPreparingAttack)
             {
-                if (!IsPreparingAttack)
-                {
-                    fxSuite.ChargeVfx.Try(v => v.Stop(true));
-                }
-                else if (fxSuite.ChargeVfx.TryGet(v => v.IsPlaying, out var playing) && !playing && CachedAttack.ShowVisualFx)
-                {
-                    fxSuite.ChargeVfx.Try(v => v.Display(this));
-                }
+                chargeVfx.Try(v => v.Stop(true));
+            }
+            else if (chargeVfx.TryGet(v => v.IsPlaying, out var playing) && !playing && CachedAttack.ShowVisualFx)
+            {
+                chargeVfx.Try(v => v.Display(this));
             }
             if (parryCooldownTimer > 0)
             {
@@ -123,7 +128,7 @@ namespace Fray.Weapons
 
             parryDurationTimer = parry.Duration;
             IsParrying = true;
-            fxSuite.ChargeParryVfx.Try(v => v.Display(this, VfxHandler.Options.ForSocket(GetVfxSocket())));
+            chargeParryVfx.Try(v => v.Display(this, VfxHandler.Options.ForSocket(GetVfxSocket())));
         }
 
         public float GetDamage() => DamageMultiplier * baseDamage;
@@ -137,7 +142,7 @@ namespace Fray.Weapons
                 parentStamina.Decrease(attack.StaminaRequired, gameObject);
             }
 
-            fxSuite.ChargeVfx.Try(v => v.Stop(true));
+            chargeVfx.Try(v => v.Stop(true));
             IsPreparingAttack = true;
             CachedAttack = attack;
             attackDurationTimer = attack.Duration;
@@ -169,9 +174,9 @@ namespace Fray.Weapons
             if (CachedAttack.PlaySoundFx && !parried)
             {
                 if (hits.Count > 0)
-                    fxSuite.HitSfx.Try(v => v.Play(this));
+                    hitSfx.Try(v => v.Play(this));
                 else
-                    fxSuite.MissSfx.Try(v => v.Play(this));
+                    missSfx.Try(v => v.Play(this));
             }
 
             // Vfx
@@ -180,7 +185,7 @@ namespace Fray.Weapons
             //     target.position - OwnerObj.transform.position :
             //     Mathf.Sign(OwnerObj.transform.localScale.x) * OwnerObj.transform.localScale.x * OwnerObj.transform.right;
 
-            if (CachedAttack.ShowVisualFx && !parried && fxSuite.AttackVfx.TryGet(p => p, out var fx))
+            if (CachedAttack.ShowVisualFx && !parried && attackVfx.TryGet(p => p, out var fx))
             {
                 var opt = VfxHandler.Options.ForSwordAttack(CachedAttack, transform.position, dir);
                 var clamped = Math.Clamp(DamageMultiplier, 1F, 3F);
@@ -204,13 +209,26 @@ namespace Fray.Weapons
 
         private void Start()
         {
-            fxSuite?.CacheAll(this);
-            // Setup collider
+            chargeParryVfx.Try(v => v.Cache(this));
+            attackVfx.Try(v => v.Cache(this));
+            chargeVfx.Try(v => v.Cache(this));
+            parryVfx.Try(v => v.Cache(this));
+
+            hitSfx.Try(v => v.Cache(this));
+            missSfx.Try(v => v.Cache(this));
+            parrySfx.Try(v => v.Cache(this));
         }
 
         private void OnDestroy()
         {
-            fxSuite?.DisposeAll();
+            chargeParryVfx.Try(v => v.Dispose());
+            attackVfx.Try(v => v.Dispose());
+            chargeVfx.Try(v => v.Dispose());
+            parryVfx.Try(v => v.Dispose());
+
+            hitSfx.Try(v => v.Dispose());
+            missSfx.Try(v => v.Dispose());
+            parrySfx.Try(v => v.Dispose());
         }
 
         #region Parry
@@ -221,13 +239,13 @@ namespace Fray.Weapons
             parryDurationTimer = 0F;
             parryCooldownTimer = parry.Cooldown;
             IsParrying = false;
-            fxSuite.ChargeParryVfx.Try(v => v.Stop(true));
+            chargeParryVfx.Try(v => v.Stop(true));
             if (parried)
             {
                 Parried?.Invoke();
                 AttackRotate();
-                fxSuite.ParryVfx.Try(v => v.Display(this, parryVfxOptions));
-                fxSuite.ParrySfx.Try(v => v.Play(this));
+                parryVfx.Try(v => v.Display(this, parryVfxOptions));
+                parrySfx.Try(v => v.Play(this));
             }
         }
 

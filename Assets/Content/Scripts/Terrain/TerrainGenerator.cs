@@ -1,65 +1,78 @@
 using Fray.Terrain;
+using GibFrame;
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
 namespace Fray
 {
+    [RequireComponent(typeof(AstarPath))]
     public class TerrainGenerator : MonoBehaviour
     {
         [SerializeField] private Tilemap tilemap;
         [SerializeField] private Vector2Int mapSize = new Vector2Int(20, 20);
         [SerializeField] private TerrainBimatrixComposer composer;
         [SerializeField] private int seed;
-        [Header("Tiles")]
-        [SerializeField] private Tile floor;
-        [SerializeField] private Tile wall;
-        [SerializeField] private Tile sideWall;
-        [SerializeField] private GameObject charaPrefab;
-        private GameObject charaInstance;
+        [SerializeField] private UnityEvent onGenerated;
+        [SerializeField] private bool generateNavMesh = true;
+        [SerializeField] private TerrainTiles tiles;
+        [SerializeField] private bool alreadyGenerated = false;
+        private AstarPath astar;
+
+        public event Action OnGenerate = delegate { };
+
+        private void Awake()
+        {
+            astar = GetComponent<AstarPath>();
+        }
 
         private void Start()
         {
-        }
-
-        private Tile GetTileById(int id)
-        {
-            return id switch
+            if (!alreadyGenerated)
             {
-                0 => floor,
-                1 => wall,
-                _ => wall,
-            };
+                GenerateTerrain();
+            }
+            else
+            {
+                BakeNavMesh();
+            }
         }
 
-        private void Generate()
+        private void GenerateTerrain()
         {
+            tilemap.ClearAllTiles();
             var bimatrix = composer.Compose(mapSize.x, mapSize.y, seed);
-
             for (int i = 0; i < mapSize.x; i++)
             {
                 for (int j = 0; j < mapSize.y; j++)
                 {
-                    tilemap.SetTile(new Vector3Int(i - (mapSize.x - 1) / 2, j - (mapSize.y - 1) / 2, 0), GetTileById(bimatrix[i, j]));
                     if (j - 1 >= 0 && j - 1 < mapSize.y && bimatrix[i, j] == 1 && bimatrix[i, j - 1] == 0)
                     {
-                        tilemap.SetTile(new Vector3Int(i - (mapSize.x - 1) / 2, j - (mapSize.y - 1) / 2, 0), sideWall);
+                        tilemap.SetTile(new Vector3Int(i - (mapSize.x) / 2, j - (mapSize.y) / 2, 0), tiles.Baseboard.GetRandomTile());
+                    }
+                    else if (bimatrix[i, j] == 1)
+                    {
+                        tilemap.SetTile(new Vector3Int(i - (mapSize.x) / 2, j - (mapSize.y) / 2, 0), tiles.Wall.GetRandomTile());
+                    }
+                    else if (bimatrix[i, j] == 0)
+                    {
+                        tilemap.SetTile(new Vector3Int(i - (mapSize.x) / 2, j - (mapSize.y) / 2, 0), tiles.Floor.GetRandomTile());
                     }
                 }
             }
+            new Timer(this, 0.25F, true, true, new Callback(BakeNavMesh));
         }
 
-        private void Update()
+        private void BakeNavMesh()
         {
-            if (UnityEngine.Input.GetKeyDown(KeyCode.G))
+            if (generateNavMesh)
             {
-                tilemap.ClearAllTiles();
-                Generate();
-                if (!charaInstance)
-                {
-                    charaInstance = Instantiate(charaPrefab);
-                }
-                charaInstance.transform.localPosition = Vector3.zero;
+                astar.data.gridGraph.SetDimensions(mapSize.x, mapSize.y, 1);
+                astar.Scan();
             }
+            onGenerated?.Invoke();
+            OnGenerate?.Invoke();
         }
     }
 }

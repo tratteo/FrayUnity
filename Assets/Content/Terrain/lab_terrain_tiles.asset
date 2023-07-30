@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 430c776a4b8bcf1419ee9fcb5af30a7e, type: 3}
+  m_Name: lab_terrain_tiles
+  m_EditorClassIdentifier: 
+  floor:
+    tiles:
+    - tile: {fileID: 11400000, guid: 603f725ff8a1f72418b16798422278e8, type: 2}
+      influence: 0.5619762
+      randomizeRotation: 0
+    - tile: {fileID: 11400000, guid: 22f46aa42417cdf40afa1f9b1d512adc, type: 2}
+      influence: 0.040835075
+      randomizeRotation: 0
+    - tile: {fileID: 11400000, guid: f272338991984a74093bbce00ef5174f, type: 2}
+      influence: 0.14434724
+      randomizeRotation: 0
+    - tile: {fileID: 11400000, guid: 5b4eaabc305408a46ac104b10bfe79c1, type: 2}
+      influence: 0.12630384
+      randomizeRotation: 0
+    - tile: {fileID: 11400000, guid: 194fe8159ca464d4781e0322cf3014b3, type: 2}
+      influence: 0.12653768
+      randomizeRotation: 0
+  wall:
+    tiles:
+    - tile: {fileID: 11400000, guid: 64d87ac37d715534b9ca01214751e71f, type: 2}
+      influence: 1
+      randomizeRotation: 0
+  baseboard:
+    tiles:
+    - tile: {fileID: 11400000, guid: 378ff7938a8044046bd613f15bc2f4f3, type: 2}
+      influence: 1
+      randomizeRotation: 0

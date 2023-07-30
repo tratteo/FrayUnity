@@ -30,6 +30,13 @@ namespace Fray.Character.Input
             input.Enable();
             input.Dodge.performed += DodgeCallback;
             input.Attack.performed += AttackCallback;
+            input.Parry.performed += ParryCallback;
+        }
+
+        private void ParryCallback(InputAction.CallbackContext context)
+        {
+            if (!input.enabled || !context.performed) return;
+            InputEvent?.Invoke(new CharacterInputData(CharacterAction.Parry));
         }
 
         private void AttackCallback(InputAction.CallbackContext context)
