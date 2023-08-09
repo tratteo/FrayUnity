@@ -14,6 +14,7 @@ namespace Fray.Npc
         [Header("Weapon")]
         [SerializeField] private GameObject swordPrefab;
         [SerializeField] private RandomizedFloat attackDelay;
+        [SerializeField] private float parryProbability = 0.25F;
         private Sword sword;
         private bool attacking = false;
 
@@ -31,7 +32,18 @@ namespace Fray.Npc
             {
                 if (collider.CompareTag("Character"))
                 {
+                    if (Target != collider.gameObject && collider.gameObject.TryGetComponent<IWeaponOwner>(out var owner) && owner.GetWeapon() is Sword enemySword)
+                    {
+                        enemySword.Triggered += () =>
+                        {
+                            if (Random.value < parryProbability && !sword.IsPreparingAttack)
+                            {
+                                sword.EnableParry();
+                            }
+                        };
+                    }
                     Target = collider.gameObject;
+
                     sword.SetTarget(Target.transform);
                     return;
                 }

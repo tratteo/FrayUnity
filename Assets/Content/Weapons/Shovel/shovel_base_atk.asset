@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 83b0ad9e6e6697a46a932c9a52869c0b, type: 3}
-  m_Name: rustypole_base_atk
+  m_Name: shovel_base_atk
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   range: 4.75
-  duration: 0.15
+  duration: 0.5
   staminaRequired: 14.5
   canBeParried: 1
   offset: {x: 0, y: 0, z: 0}

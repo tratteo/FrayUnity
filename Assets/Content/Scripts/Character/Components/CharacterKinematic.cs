@@ -68,11 +68,11 @@ namespace Fray.Character
 
         public System.Numerics.Vector2 GetTraslation() => throw new NotImplementedException();
 
-        public void OnTimelineEvent(TimelineEvent ev)
+        public void OnTimelineEvent(string ev)
         {
             switch (ev)
             {
-                case TimelineEvent.Footsteps:
+                case "footsteps":
                     footstepsSfx.Try(s => s.Play(this));
                     break;
             }
@@ -110,11 +110,11 @@ namespace Fray.Character
                     dashSfx.Try(sfx => sfx.Play(this));
                     if (GetRelativeTraslationSign(direction) > 0F)
                     {
-                        AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(AnimatorDriverSystem.DashForward));
+                        AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(Animations.DashForward));
                     }
                     else
                     {
-                        AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(AnimatorDriverSystem.DashBackward));
+                        AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(Animations.DashBackward));
                     }
                     break;
             }
@@ -134,11 +134,11 @@ namespace Fray.Character
             }
             else if (Mathf.Approximately(managedRb.Traslation.magnitude, 0F) || !Enabled)
             {
-                AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(AnimatorDriverSystem.Idle));
+                AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(Animations.Idle));
             }
             else
             {
-                AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(AnimatorDriverSystem.Run, false, GetRelativeTraslationSign(managedRb.Traslation)));
+                AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(Animations.Run, false, GetRelativeTraslationSign(managedRb.Traslation)));
             }
 
             if (lastUpdateStepDistance > (movementSpeed * Time.deltaTime / 1.75F))

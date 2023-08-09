@@ -36,7 +36,7 @@ namespace Fray.Npc
 
         public float GetRelativeTraslationSign(Vector3 vector) => Mathf.Sign(transform.localScale.x * vector.x);
 
-        public virtual void OnTimelineEvent(TimelineEvent ev)
+        public virtual void OnTimelineEvent(string ev)
         {
         }
 
@@ -74,11 +74,11 @@ namespace Fray.Npc
 
             if (Mathf.Approximately(ManagedRb.Traslation.magnitude, 0F))
             {
-                AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(AnimatorDriverSystem.Idle));
+                AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(Animations.Idle));
             }
             else
             {
-                AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(AnimatorDriverSystem.Run, false, GetRelativeTraslationSign(ManagedRb.Traslation)));
+                AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(Animations.Run, false, GetRelativeTraslationSign(ManagedRb.Traslation)));
             }
             computePathJob.Step(Time.deltaTime);
             if (currentPath != null)

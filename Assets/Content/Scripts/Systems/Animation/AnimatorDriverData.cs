@@ -1,8 +1,5 @@
 namespace Fray.Systems.Animation
 {
-    public enum TimelineEvent
-    { Footsteps }
-
     public readonly struct AnimatorDriverData
     {
         public readonly string id;

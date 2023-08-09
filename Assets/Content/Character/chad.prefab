@@ -1166,17 +1166,16 @@ GameObject:
   - component: {fileID: 8689047948537364503}
   - component: {fileID: 6493635550010716243}
   - component: {fileID: 1649590723027457142}
-  - component: {fileID: 7267100658254309227}
   - component: {fileID: 8117462937594497166}
   - component: {fileID: 3685663751179421847}
   - component: {fileID: 2024711657874428831}
-  - component: {fileID: 3663266018298567588}
   - component: {fileID: 7569106690881876520}
   - component: {fileID: 5996862877638412796}
   - component: {fileID: 4581201821338841509}
   - component: {fileID: 8827194689065863431}
   - component: {fileID: 4529422357137483973}
   - component: {fileID: 1822800583840875484}
+  - component: {fileID: -6955758057614499316}
   m_Layer: 0
   m_Name: chad
   m_TagString: Character
@@ -1227,11 +1226,9 @@ MonoBehaviour:
     - {fileID: 8827194689065863431}
     - {fileID: 1822800583840875484}
   - name: Animation
-    isVisible: 0
+    isVisible: 1
     isEditable: 0
-    components:
-    - {fileID: 3663266018298567588}
-    - {fileID: 7267100658254309227}
+    components: []
   - name: Functionalities
     isVisible: 0
     isEditable: 0
@@ -1241,7 +1238,7 @@ MonoBehaviour:
     - {fileID: 4529422357137483973}
     - {fileID: 2024711657874428831}
   - name: Components
-    isVisible: 1
+    isVisible: 0
     isEditable: 0
     components:
     - {fileID: 4581201821338841509}
@@ -1293,7 +1290,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 2, y: 2}
+  m_Size: {x: 2.6666667, y: 2.6666667}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1326,28 +1323,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!95 &7267100658254309227
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4661936600061874486}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 327a27f4e7480c04c8168069d4df2fb7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &8117462937594497166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1404,20 +1379,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxValue: 100
---- !u!114 &3663266018298567588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4661936600061874486}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1025db93f7a5a446bcc63427963785e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationLayerIndex: 0
-  rotatedSuffix: _mirror
 --- !u!114 &7569106690881876520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1542,6 +1503,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forceDampening: 0.1
+--- !u!114 &-6955758057614499316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4661936600061874486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d53d308a344e34a84f04ba5ccb6b05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sheet: {fileID: 11400000, guid: 79f4f68225324bc45b5087e7e9446a2d, type: 2}
 --- !u!1 &5959273517646210796
 GameObject:
   m_ObjectHideFlags: 0

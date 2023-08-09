@@ -135,6 +135,7 @@ namespace Fray.Weapons
 
         protected override void TriggerBehaviour(params object[] args)
         {
+            if (IsParrying) return;
             var attack = baseAttack;
             if (parentStamina != null)
             {

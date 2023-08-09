@@ -1,12 +1,10 @@
 using Fray.Character.Input;
 using Fray.Systems;
-using Fray.Systems.Animation;
 using UnityEngine;
 
 namespace Fray.Character
 {
     [RequireComponent(typeof(ICharacterInputSystem))]
-    [RequireComponent(typeof(AnimatorDriverSystem))]
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(StaminaSystem))]
     public abstract class CharacterComponent : MonoBehaviour

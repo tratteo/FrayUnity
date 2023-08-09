@@ -20,7 +20,7 @@ namespace Fray.Npc
         private float healCd;
         private UpdateJob healJob;
         private Weapon weapon;
-        private Optional<AnimatorDriverSystem> animatorDriver;
+        private Optional<AnimationDriver> animatorDriver;
         private float lookSign = 1F;
         private float speed = 0F;
         private Vector3 lastPos;
@@ -93,7 +93,7 @@ namespace Fray.Npc
 
         private void Awake()
         {
-            animatorDriver = new Optional<AnimatorDriverSystem>(() => GetComponent<AnimatorDriverSystem>());
+            animatorDriver = new Optional<AnimationDriver>(() => GetComponent<AnimationDriver>());
             selector = GetComponent<DistanceSelector2D>();
             health = GetComponent<HealthSystem>();
             lastPos = transform.position;
@@ -136,11 +136,11 @@ namespace Fray.Npc
             {
                 if (Mathf.Approximately(speed, 0F))
                 {
-                    driver.DriveAnimation(new AnimatorDriverData(AnimatorDriverSystem.Idle));
+                    driver.DriveAnimation(new AnimatorDriverData(Animations.Idle));
                 }
                 else
                 {
-                    driver.DriveAnimation(new AnimatorDriverData(AnimatorDriverSystem.Run, transform.localScale.x < 1, SpeedMultiplier.Value * GetRelativeTraslationSign(traslation)));
+                    driver.DriveAnimation(new AnimatorDriverData(Animations.Run, transform.localScale.x < 1, SpeedMultiplier.Value * GetRelativeTraslationSign(traslation)));
                 }
             });
         }

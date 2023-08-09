@@ -6,6 +6,6 @@ namespace Fray.Systems.Animation
     {
         public event Action<AnimatorDriverData> AnimatorDriverDataEvent;
 
-        public void OnTimelineEvent(TimelineEvent ev);
+        public void OnTimelineEvent(string ev);
     }
 }
