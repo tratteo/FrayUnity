@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Fray.Weapons
+namespace Fray.Systems.Weapons
 {
     /// <summary>
     ///   <see cref="ScriptableObject"/> defining parry statistics for a <see cref="Sword"/>

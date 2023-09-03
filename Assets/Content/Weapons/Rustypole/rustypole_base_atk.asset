@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageMultiplier: 1
   range: 4.75
-  duration: 0.15
+  duration: 0.02
   staminaRequired: 14.5
   canBeParried: 1
   offset: {x: 0, y: 0, z: 0}

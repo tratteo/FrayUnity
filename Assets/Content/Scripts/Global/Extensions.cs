@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Fray.Extensions
 {
     public static class Extensions
     {
-        /// <summary>
-        ///   Execute a function after the specified delay
-        /// </summary>
-        public static Coroutine ExecuteAfterDelay(this MonoBehaviour mono, float delay, Action callback) => mono.StartCoroutine(Delayed_C(delay, callback));
+        public static Color WithOpacity(this Color c, float a)
+        {
+            c.a = a;
+            return c;
+        }
 
         public static void AddManagedForce2D(this Rigidbody2D rigidbody2D, Vector3 force)
         {
@@ -30,12 +29,6 @@ namespace Fray.Extensions
                 }
                 rigidbody2D.AddForce(force);
             }
-        }
-
-        private static IEnumerator Delayed_C(float delay, Action callback)
-        {
-            yield return new WaitForSeconds(delay);
-            callback?.Invoke();
         }
     }
 }

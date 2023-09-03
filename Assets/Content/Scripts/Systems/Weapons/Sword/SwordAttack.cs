@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Fray.Weapons
+namespace Fray.Systems.Weapons
 {
     /// <summary>
     ///   <see cref="ScriptableObject"/> defining an attack that can be performed with a <see cref="Sword"/>

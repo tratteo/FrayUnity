@@ -8,8 +8,7 @@
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.TextMeshPro",
         "Cinemachine",
-        "Validatox",
-        "AstarPathfindingProject"
+        "Validatox"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

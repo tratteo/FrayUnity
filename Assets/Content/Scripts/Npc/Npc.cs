@@ -1,9 +1,9 @@
+using Fray.Npc.Pathfinding;
 using Fray.Systems;
 using Fray.Systems.Animation;
 using GibFrame;
 using GibFrame.Performance;
 using GibFrame.Selectors;
-using Pathfinding;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,14 +13,16 @@ namespace Fray.Npc
     public abstract class Npc : MonoBehaviour, IAnimationDataSource, ITargetOwner
     {
         [SerializeField] private float movementSpeed = 5F;
-        [SerializeField] private float nextWaypointDistance = 3F;
+        [SerializeField] private float nextWaypointDistance = 0.2F;
         [Header("Advanced")]
-        [SerializeField] private float pathUpdateInterval = 0.5F;
+        [SerializeField] private float pathUpdateInterval = 0.75F;
         private UpdateJob computePathJob;
 
-        private Seeker seeker;
-        private Path currentPath;
+        private Vector2[] currentPath;
+
         private int currentWaypointIndex = 0;
+
+        protected Pathfinder Pathfinder { get; private set; }
 
         protected ManagedRigidbody ManagedRb { get; private set; }
 
@@ -48,18 +50,13 @@ namespace Fray.Npc
             computePathJob = new UpdateJob(new Callback(ComputePath), pathUpdateInterval, true);
         }
 
-        protected virtual void OnPathComplete(Path p)
+        protected virtual void OnPathComplete(Vector2[] points, bool success)
         {
-            if (!p.error)
+            if (success)
             {
-                currentPath = p;
+                currentPath = points;
                 currentWaypointIndex = 0;
             }
-        }
-
-        protected void MoveTowards(Vector3 pos)
-        {
-            seeker.StartPath(transform.position, pos, OnPathComplete);
         }
 
         protected virtual void Update()
@@ -80,24 +77,23 @@ namespace Fray.Npc
             {
                 AnimatorDriverDataEvent?.Invoke(new AnimatorDriverData(Animations.Run, false, GetRelativeTraslationSign(ManagedRb.Traslation)));
             }
+
             computePathJob.Step(Time.deltaTime);
             if (currentPath != null)
             {
-                if (currentWaypointIndex < currentPath.vectorPath.Count)
+                if (currentWaypointIndex < currentPath.Length)
                 {
-                    ManagedRb.Traslation = movementSpeed * ((Vector2)currentPath.vectorPath[currentWaypointIndex] - Rigidbody.position).normalized;
-                    float distance = Vector2.Distance(Rigidbody.position, currentPath.vectorPath[currentWaypointIndex]);
-                    if (distance < nextWaypointDistance)
-                    {
-                        currentWaypointIndex++;
-                    }
+                    ManagedRb.Traslation = movementSpeed * (currentPath[currentWaypointIndex] - Rigidbody.position).normalized;
+                    float distance = Vector2.Distance(Rigidbody.position, currentPath[currentWaypointIndex]);
+                    if (distance < nextWaypointDistance) currentWaypointIndex++;
+                    if (currentWaypointIndex >= currentPath.Length) ManagedRb.Traslation = Vector2.zero;
                 }
             }
         }
 
         protected virtual void Awake()
         {
-            seeker = GetComponent<Seeker>();
+            Pathfinder = GetComponent<Pathfinder>();
             TargetSelector = GetComponent<DistanceSelector2D>();
             ManagedRb = GetComponent<ManagedRigidbody>();
             Rigidbody = GetComponent<Rigidbody2D>();
@@ -109,13 +105,30 @@ namespace Fray.Npc
         {
         }
 
-        protected virtual Vector3 GetTargetPosition() => Target.transform.position;
+        protected virtual Vector3 GetTargetPosition() => Pathfinder.GetClosestCellTo(Target.transform.position).WorldPos;
+
+        private void OnDrawGizmos()
+        {
+            if (currentPath != null && currentPath.Length > 0)
+            {
+                for (int i = currentWaypointIndex; i < currentPath.Length; i++)
+                {
+                    Gizmos.color = Color.yellow;
+                    Gizmos.DrawCube(currentPath[i], Vector3.one * .5F);
+
+                    if (i == currentWaypointIndex) Gizmos.DrawLine(transform.position, currentPath[i]);
+                    else Gizmos.DrawLine(currentPath[i - 1], currentPath[i]);
+                }
+            }
+        }
 
         private void ComputePath()
         {
-            if (Target)
+            Debug.Log("Computing path");
+            if (Target && Pathfinder)
             {
-                seeker.StartPath(transform.position, GetTargetPosition(), OnPathComplete);
+                var cell = Pathfinder.GetClosestCellTo(transform.position);
+                Pathfinder.Pathfind(new PathRequest(cell.WorldPos, GetTargetPosition(), OnPathComplete));
             }
             computePathJob.EditUpdateTime(pathUpdateInterval);
         }

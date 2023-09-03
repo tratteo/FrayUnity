@@ -12,7 +12,7 @@ namespace Fray
         bool IApplicable.CanBeApplied(object payload, GameObject target) => payload is T payloadType && CanBeApplied(payloadType, target);
 
         /// <summary>
-        ///   Define whether the payload can be applied to the target <see cref="GameObject"/>. Used by <see cref="Applicator.TryApply{T}(T,
+        ///   Define whether the payload can be applied to the target <see cref="GameObject"/>. Used by <see cref="Stitcher.TryStitch{T}(T,
         ///   GameObject, out T, Action{T})"/>
         /// </summary>
         /// <param name="payload"> </param>
@@ -30,16 +30,15 @@ namespace Fray
     }
 
     /// <summary>
-    ///   Collection of utility methods that must be run from the server
+    ///   Collection of utility methods to stitch features at runtime to game objects
     /// </summary>
-    public static class Applicator
+    public static class Stitcher
     {
         /// <summary>
-        ///   Try to apply (attach to a specific <see cref="GameObject"/>) the prefab with authority: if the target is a client give it
-        ///   authority, if the target is not a client (NPC), keep the authority to the server
+        ///   Try to stitch (attach to a specific <see cref="GameObject"/>) the prefab.
         /// </summary>
         /// <returns> </returns>
-        public static bool TryApply<T>(T payload, GameObject target, out T obj, Action<T> factory = null) where T : MonoBehaviour
+        public static bool TryStitch<T>(T payload, GameObject target, out T obj, Action<T> factory = null) where T : MonoBehaviour
         {
             obj = default;
             if (payload is IApplicable applicable && !applicable.CanBeApplied(payload, target)) return false;

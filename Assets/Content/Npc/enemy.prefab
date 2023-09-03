@@ -755,9 +755,9 @@ GameObject:
   - component: {fileID: 6520797672094144886}
   - component: {fileID: 271978303799545930}
   - component: {fileID: 2806435575516224968}
-  - component: {fileID: 6541718929628812839}
   - component: {fileID: 3535233416967402222}
   - component: {fileID: 5178087480514482975}
+  - component: {fileID: 5290357377706995726}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
@@ -775,7 +775,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8741329877193465062}
@@ -804,7 +804,6 @@ MonoBehaviour:
     - {fileID: 7657324166887552511}
     - {fileID: 6520797672094144886}
     - {fileID: 271978303799545930}
-    - {fileID: 6541718929628812839}
     - {fileID: 3535233416967402222}
   - name: Functionalities
     isVisible: 1
@@ -993,44 +992,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 6
-  nextWaypointDistance: 3
-  pathUpdateInterval: 0.5
+  nextWaypointDistance: 0.25
+  pathUpdateInterval: 0.75
   targetPaddingDistance:
-    min: 2
+    min: 1
     max: 5
   swordPrefab: {fileID: 486022269891398558, guid: 765b0ed52a5ab5a4082eb743f23e858b, type: 3}
   attackDelay:
     min: 0.5
     max: 2.5
   parryProbability: 0.45
---- !u!114 &6541718929628812839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3200590516845116736}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 373b52eb9bf8c40f785bb6947a1aee66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 1
-  drawGizmos: 1
-  detailedGizmos: 0
-  startEndModifier:
-    addPoints: 0
-    exactStartPoint: 3
-    exactEndPoint: 3
-    useRaycasting: 0
-    mask:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    useGraphRaycasting: 0
-  traversableTags: -1
-  tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
-  graphMask:
-    value: -1
 --- !u!114 &3535233416967402222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,6 +1028,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sheet: {fileID: 11400000, guid: 1810218847b3d6f4b83bb2c05661e4ff, type: 2}
+--- !u!114 &5290357377706995726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3200590516845116736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66fc7a11804627c4a9a1a84f57cbf892, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prunePath: 1
 --- !u!1 &3226961243631371789
 GameObject:
   m_ObjectHideFlags: 0

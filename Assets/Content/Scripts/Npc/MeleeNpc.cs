@@ -1,5 +1,4 @@
 using Fray.Systems.Weapons;
-using Fray.Weapons;
 using GibFrame;
 using GibFrame.Data;
 using System.Collections.Generic;
@@ -32,16 +31,6 @@ namespace Fray.Npc
             {
                 if (collider.CompareTag("Character"))
                 {
-                    if (Target != collider.gameObject && collider.gameObject.TryGetComponent<IWeaponOwner>(out var owner) && owner.GetWeapon() is Sword enemySword)
-                    {
-                        enemySword.Triggered += () =>
-                        {
-                            if (Random.value < parryProbability && !sword.IsPreparingAttack)
-                            {
-                                sword.EnableParry();
-                            }
-                        };
-                    }
                     Target = collider.gameObject;
 
                     sword.SetTarget(Target.transform);
@@ -56,7 +45,7 @@ namespace Fray.Npc
         {
             var randX = Mathf.Sign(transform.position.x - Target.transform.position.x) * Random.value;
             var randY = Mathf.Sign(transform.position.y - Target.transform.position.y) * Random.value;
-            return Target.transform.position + new Vector3(randX, randY, 0F).normalized * targetPaddingDistance.GetNext();
+            return Pathfinder.GetClosestCellTo(Target.transform.position + new Vector3(randX, randY, 0F).normalized * targetPaddingDistance.GetNext()).WorldPos;
         }
 
         protected override void Start()
@@ -77,6 +66,11 @@ namespace Fray.Npc
                 {
                     attacking = true;
                     new Timer(this, attackDelay, false, true, new Callback(() => sword.Trigger()));
+                }
+                //TODO change automatic parry method
+                if (!sword.IsParrying && !sword.IsPreparingAttack && Target.TryGetComponent<IWeaponOwner>(out var owner) && owner.GetWeapon() is Sword enemySword && enemySword.IsPreparingAttack && Random.value < parryProbability)
+                {
+                    sword.EnableParry();
                 }
             }
         }

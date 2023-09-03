@@ -1,4 +1,4 @@
-namespace Fray.Weapons
+namespace Fray.Systems.Weapons
 {
     /// <summary>
     ///   Can block

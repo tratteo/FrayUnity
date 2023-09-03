@@ -55,8 +55,7 @@ namespace Fray.Systems.Animation
             if (index >= 0)
             {
                 anim = animations[index];
-                Debug.Log(index);
-                frame = Sprite.Create(sheet, new Rect(count * 32, sheet.height - (index + 1) * 32, 32, 32), new Vector2(0.5F, 0.5F), pixelPerUnit);
+                frame = Sprite.Create(sheet, new Rect(count * blockSize, sheet.height - (index + 1) * blockSize, blockSize, blockSize), new Vector2(0.5F, 0.5F), pixelPerUnit);
                 return true;
             }
             return false;

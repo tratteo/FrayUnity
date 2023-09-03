@@ -2,7 +2,6 @@ using Fray.Character.Input;
 using Fray.Extensions;
 using Fray.FX;
 using Fray.Systems.Weapons;
-using Fray.Weapons;
 using GibFrame;
 using UnityEngine;
 using Validatox.Meta;

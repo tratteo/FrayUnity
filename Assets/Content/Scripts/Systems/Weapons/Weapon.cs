@@ -8,7 +8,7 @@ namespace Fray.Systems.Weapons
 {
     /// <summary>
     ///   <para> Base class for a weapon </para>
-    ///   This class manages the attachment of the weapon object to the owner through the <see cref="Applicator"/> module by implementing
+    ///   This class manages the attachment of the weapon object to the owner through the <see cref="Stitcher"/> module by implementing
     ///   the <see cref="IApplicable{T}"/> interface.
     /// </summary>
     public abstract class Weapon : MonoBehaviour, ITargetOwner, IDescriptable, IOwnable, ICooldownOwner, IAttackSpeedOwner, IApplicable<Weapon>
@@ -131,7 +131,7 @@ namespace Fray.Systems.Weapons
 
         #region Attachment
 
-        public static bool TryApply<T>(T weapon, GameObject target, out T instance) where T : Weapon => Applicator.TryApply(weapon, target, out instance, wpn => wpn.SetOwner(target));
+        public static bool TryApply<T>(T weapon, GameObject target, out T instance) where T : Weapon => Stitcher.TryStitch(weapon, target, out instance, wpn => wpn.SetOwner(target));
 
         public bool CanBeApplied(Weapon payload, GameObject target) => target.TryGetComponent<IWeaponOwner>(out var _);
 

@@ -1,4 +1,4 @@
-using Fray.Weapons;
+using Fray.Systems.Weapons;
 using UnityEngine;
 
 namespace Fray.FX

@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Validatox.Meta;
 
-namespace Fray.Weapons
+namespace Fray.Systems.Weapons
 {
     /// <summary>
     ///   Sword implementation of a <see cref="Weapon"/>

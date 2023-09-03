@@ -1,3 +1,4 @@
+using Fray.Npc.Pathfinding;
 using Fray.Terrain;
 using GibFrame;
 using System;
@@ -7,7 +8,6 @@ using UnityEngine.Tilemaps;
 
 namespace Fray
 {
-    [RequireComponent(typeof(AstarPath))]
     public class TerrainGenerator : MonoBehaviour
     {
         [SerializeField] private Tilemap tilemap;
@@ -15,28 +15,20 @@ namespace Fray
         [SerializeField] private TerrainBimatrixComposer composer;
         [SerializeField] private int seed;
         [SerializeField] private UnityEvent onGenerated;
-        [SerializeField] private bool generateNavMesh = true;
+        [SerializeField] private bool generatePathfindTerrain = true;
         [SerializeField] private TerrainTiles tiles;
-        [SerializeField] private bool alreadyGenerated = false;
-        private AstarPath astar;
+        private PathfindTerrain terrain;
 
         public event Action OnGenerate = delegate { };
 
         private void Awake()
         {
-            astar = GetComponent<AstarPath>();
+            terrain = GetComponent<PathfindTerrain>();
         }
 
         private void Start()
         {
-            if (!alreadyGenerated)
-            {
-                GenerateTerrain();
-            }
-            else
-            {
-                BakeNavMesh();
-            }
+            GenerateTerrain();
         }
 
         private void GenerateTerrain()
@@ -61,15 +53,17 @@ namespace Fray
                     }
                 }
             }
-            new Timer(this, 0.25F, true, true, new Callback(BakeNavMesh));
+            new Timer(this, 0.25F, true, true, new Callback(GeneratePathfindTerrain));
         }
 
-        private void BakeNavMesh()
+        private void GeneratePathfindTerrain()
         {
-            if (generateNavMesh)
+            if (generatePathfindTerrain && terrain)
             {
-                astar.data.gridGraph.SetDimensions(mapSize.x, mapSize.y, 1);
-                astar.Scan();
+                terrain.size = mapSize * 2;
+                terrain.cellSize = 0.5F;
+                terrain.unitSize = 1.35F;
+                terrain.Generate();
             }
             onGenerated?.Invoke();
             OnGenerate?.Invoke();
