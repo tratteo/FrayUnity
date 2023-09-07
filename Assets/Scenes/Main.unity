@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &617623616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -457,13 +457,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 886090866}
-  mapSize: {x: 100, y: 75}
+  mapSize: {x: 150, y: 100}
   composer: {fileID: 11400000, guid: c04c67448b285d34bb2f4224ee4a6fc0, type: 2}
   seed: 25
   onGenerated:
     m_PersistentCalls:
       m_Calls: []
-  generatePathfindTerrain: 1
+  generatePathfindTerrain: 0
   tiles: {fileID: 11400000, guid: dd8d5071a16e74d45b1b89661d1c943a, type: 2}
 --- !u!156049354 &966191989
 Grid:
@@ -489,7 +489,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5c120a431cf1e44b82f2617759eb94c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateOnAwake: 0
   size: {x: 0, y: 0}
   cellSize: 0.5
   unitSize: 0.75
@@ -498,10 +497,11 @@ MonoBehaviour:
     m_Bits: 8
   obstaclesProximityPenalty: 15
   terrainPolicy: 0
-  terrains: []
   blurPenalties: 1
   blurKernelSize: 3
   showPenaltiesHeatmap: 0
+  generateOnAwake: 0
+  terrains: []
   showTerrainGizmos: 0
 --- !u!1 &1090081402
 GameObject:
@@ -519,7 +519,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1090081403
 MonoBehaviour:
   m_ObjectHideFlags: 0

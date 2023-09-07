@@ -39,15 +39,15 @@ namespace Fray
             {
                 for (int j = 0; j < mapSize.y; j++)
                 {
-                    if (j - 1 >= 0 && j - 1 < mapSize.y && bimatrix[i, j] == 1 && bimatrix[i, j - 1] == 0)
+                    if (j - 1 >= 0 && j - 1 < mapSize.y && bimatrix[i, j] == TerrainBimatrixComposer.Block && bimatrix[i, j - 1] == TerrainBimatrixComposer.Empty)
                     {
                         tilemap.SetTile(new Vector3Int(i - (mapSize.x) / 2, j - (mapSize.y) / 2, 0), tiles.Baseboard.GetRandomTile());
                     }
-                    else if (bimatrix[i, j] == 1)
+                    else if (bimatrix[i, j] == TerrainBimatrixComposer.Block)
                     {
                         tilemap.SetTile(new Vector3Int(i - (mapSize.x) / 2, j - (mapSize.y) / 2, 0), tiles.Wall.GetRandomTile());
                     }
-                    else if (bimatrix[i, j] == 0)
+                    else if (bimatrix[i, j] == TerrainBimatrixComposer.Empty)
                     {
                         tilemap.SetTile(new Vector3Int(i - (mapSize.x) / 2, j - (mapSize.y) / 2, 0), tiles.Floor.GetRandomTile());
                     }
