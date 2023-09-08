@@ -12,20 +12,13 @@ namespace Fray.Terrain
         private int drunkX;
         private int drunkY;
 
-        protected override int[,] ComposeBehaviour(int[,] mat, int width, int height)
+        protected override Bimatrix ComposeBehaviour(Bimatrix bimatrix)
         {
-            drunkX = width / 2;
-            drunkY = height / 2;
-            var occupied = 0;
-            for (int i = drunkX - 2; i <= drunkX + 2; i++)
-            {
-                for (int j = drunkY - 2; j <= drunkY + 2; j++)
-                {
-                    mat[i, j] = 0;
-                    occupied++;
-                }
-            }
-            while (occupied < mat.Length * fillPercentage)
+            var empty = 0;
+            drunkX = bimatrix.Width / 2;
+            drunkY = bimatrix.Height / 2;
+
+            while (empty < bimatrix.Length * fillPercentage)
             {
                 var drunkDistance = Rand.Next(drunkardMaxDistance.x, drunkardMaxDistance.y);
                 while (drunkDistance > 0)
@@ -35,37 +28,37 @@ namespace Fray.Terrain
                     switch (dir)
                     {
                         case 0:
-                            drunkY = Mathf.Clamp(drunkY + 1, 0, height - 1);
+                            drunkY = Mathf.Clamp(drunkY + 1, 0, bimatrix.Height - 1);
                             break;
 
                         case 1:
-                            drunkY = Mathf.Clamp(drunkY - 1, 0, height - 1);
+                            drunkY = Mathf.Clamp(drunkY - 1, 0, bimatrix.Height - 1);
                             break;
 
                         case 2:
-                            drunkX = Mathf.Clamp(drunkX + 1, 0, width - 1);
+                            drunkX = Mathf.Clamp(drunkX + 1, 0, bimatrix.Width - 1);
                             break;
 
                         case 3:
-                            drunkX = Mathf.Clamp(drunkX - 1, 0, width - 1);
+                            drunkX = Mathf.Clamp(drunkX - 1, 0, bimatrix.Width - 1);
                             break;
                     }
 
-                    if (mat[drunkX, drunkY] != 0)
+                    if (bimatrix[drunkX, drunkY] != Empty)
                     {
-                        occupied++;
-                        mat[drunkX, drunkY] = 0;
+                        empty++;
+                        bimatrix[drunkX, drunkY] = Empty;
                     }
                     if (Rand.NextDouble() < randomDrunkardPosProb)
                     {
-                        var current = (Rand.Next(width), Rand.Next(height));
+                        var current = (Rand.Next(bimatrix.Width), Rand.Next(bimatrix.Height));
                         drunkX = current.Item1;
                         drunkY = current.Item2;
                     }
                 }
             }
 
-            return mat;
+            return bimatrix;
         }
     }
 }

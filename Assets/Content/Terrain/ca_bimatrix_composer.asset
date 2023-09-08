@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cb3285a0f70757429a28a259abc5a06, type: 3}
   m_Name: ca_bimatrix_composer
   m_EditorClassIdentifier: 
-  erosionKernelSize: 3
-  dilationKernelSize: 3
-  denselyConnect: 1
+  erosionKernelSize: 1
+  dilationKernelSize: 1
   border: 2
-  spawnPointRatioPosition: {x: 0.25, y: 0.25}
-  spawnPointSize: 4
-  iterations: 12
+  spawnRadius: 3
+  minRoomSize: 8
+  minWallSize: 4
+  iterations: 8
   noiseDensity: 0.61

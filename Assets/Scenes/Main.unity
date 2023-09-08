@@ -457,14 +457,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 886090866}
-  mapSize: {x: 150, y: 100}
-  composer: {fileID: 11400000, guid: c04c67448b285d34bb2f4224ee4a6fc0, type: 2}
-  seed: 25
-  onGenerated:
-    m_PersistentCalls:
-      m_Calls: []
-  generatePathfindTerrain: 0
+  mapSize: {x: 125, y: 100}
+  composer: {fileID: 11400000, guid: 04f09dace957c1d4982a7dfae6bef213, type: 2}
+  seed: -36
+  generatePathfindTerrain: 1
   tiles: {fileID: 11400000, guid: dd8d5071a16e74d45b1b89661d1c943a, type: 2}
+  characterPrefab: {fileID: 4661936600061874486, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
 --- !u!156049354 &966191989
 Grid:
   m_ObjectHideFlags: 0
@@ -503,52 +501,6 @@ MonoBehaviour:
   generateOnAwake: 0
   terrains: []
   showTerrainGizmos: 0
---- !u!1 &1090081402
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1090081404}
-  - component: {fileID: 1090081403}
-  m_Layer: 0
-  m_Name: CharacterSpawn
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &1090081403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090081402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d6a98fa87473945a1dfaccd1105c9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnAfterGeneration: 1
-  prefab: {fileID: 4661936600061874486, guid: 8fc94b9c79e50bf41884f91efd69e899, type: 3}
---- !u!4 &1090081404
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1090081402}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!115 &1213775771
 MonoScript:
   m_ObjectHideFlags: 0
@@ -996,5 +948,4 @@ SceneRoots:
   - {fileID: 1465864617}
   - {fileID: 966191987}
   - {fileID: 1797658669}
-  - {fileID: 1090081404}
   - {fileID: 617623617}

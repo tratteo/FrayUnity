@@ -8,25 +8,13 @@ namespace Fray
         [SerializeField] private GameObject prefab;
         private GameObject spawnedInstance;
 
-        public void Spawn()
+        public void Spawn(Vector2 spawnPoint)
         {
             if (spawnedInstance)
             {
                 Destroy(spawnedInstance);
             }
             spawnedInstance = Instantiate(prefab, transform.position, Quaternion.identity);
-        }
-
-        private void Awake()
-        {
-            if (spawnAfterGeneration)
-            {
-                var terrain = FindFirstObjectByType<TerrainGenerator>();
-                if (terrain)
-                {
-                    terrain.OnGenerate += Spawn;
-                }
-            }
         }
     }
 }

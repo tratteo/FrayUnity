@@ -1,9 +1,7 @@
 using Fray.Npc.Pathfinding;
 using Fray.Terrain;
-using GibFrame;
-using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Tilemaps;
 
 namespace Fray
@@ -14,27 +12,28 @@ namespace Fray
         [SerializeField] private Vector2Int mapSize = new Vector2Int(20, 20);
         [SerializeField] private TerrainBimatrixComposer composer;
         [SerializeField] private int seed;
-        [SerializeField] private UnityEvent onGenerated;
         [SerializeField] private bool generatePathfindTerrain = true;
         [SerializeField] private TerrainTiles tiles;
-        private PathfindTerrain terrain;
-
-        public event Action OnGenerate = delegate { };
+        [SerializeField] private GameObject characterPrefab;
+        private PathfindTerrain pathfindTerrain;
 
         private void Awake()
         {
-            terrain = GetComponent<PathfindTerrain>();
+            pathfindTerrain = GetComponent<PathfindTerrain>();
         }
 
         private void Start()
         {
-            GenerateTerrain();
+            _ = composer.Compose(mapSize.x, mapSize.y, seed, GenerateTerrain);
         }
 
-        private void GenerateTerrain()
+        private void OnDrawGizmos()
+        {
+        }
+
+        private void GenerateTerrain(Bimatrix bimatrix)
         {
             tilemap.ClearAllTiles();
-            var bimatrix = composer.Compose(mapSize.x, mapSize.y, seed);
             for (int i = 0; i < mapSize.x; i++)
             {
                 for (int j = 0; j < mapSize.y; j++)
@@ -53,20 +52,23 @@ namespace Fray
                     }
                 }
             }
-            new Timer(this, 0.25F, true, true, new Callback(GeneratePathfindTerrain));
+            StartCoroutine(GeneratePathfindTerrain());
         }
 
-        private void GeneratePathfindTerrain()
+        private IEnumerator GeneratePathfindTerrain()
         {
-            if (generatePathfindTerrain && terrain)
+            yield return new WaitForEndOfFrame();
+            if (generatePathfindTerrain && pathfindTerrain)
             {
-                terrain.size = mapSize * 2;
-                terrain.cellSize = 0.5F;
-                terrain.unitSize = 1.35F;
-                terrain.Generate();
+                pathfindTerrain.size = mapSize * 2;
+                pathfindTerrain.cellSize = 0.5F;
+                pathfindTerrain.unitSize = 1.35F;
+                pathfindTerrain.Bake();
             }
-            onGenerated?.Invoke();
-            OnGenerate?.Invoke();
+            //var spawnPoint = new Vector2(tilemap.cellSize.x * (composition.Spawn.x - mapSize.x / 2) + tilemap.cellSize.x / 2, tilemap.cellSize.y * (composition.Spawn.y - mapSize.y / 2) + tilemap.cellSize.y / 2);
+            //Instantiate(characterPrefab, spawnPoint, Quaternion.identity);
+            //var terrainComposition = new TerrainComposition(spawnPoint);
+            //foreach (var listener in Gib.GetInterfacesOfType<IGenerationListener>()) listener.Generated(terrainComposition);
         }
     }
 }

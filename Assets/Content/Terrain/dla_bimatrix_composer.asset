@@ -12,13 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09289f64f2cc04a42a09d4b6f2220e6a, type: 3}
   m_Name: dla_bimatrix_composer
   m_EditorClassIdentifier: 
-  erosionKernelSize: 5
+  erosionKernelSize: 3
   dilationKernelSize: 3
-  denselyConnect: 1
   border: 2
-  spawnPointRatioPosition: {x: 0.5, y: 0.5}
-  spawnPointSize: 5
-  centreSize: 5
+  spawnSize: 3
   particleDirectionPerturbationMag: 1.75
-  particleDirectionPerturbationProb: 0.7
-  fillPercentage: 0.25
+  particleDirectionPerturbationProb: 0.946
+  fillPercentage: 0.199

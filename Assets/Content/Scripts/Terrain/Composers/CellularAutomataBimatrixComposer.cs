@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using UnityEngine;
 
 namespace Fray.Terrain
@@ -10,21 +9,21 @@ namespace Fray.Terrain
         [SerializeField] private int iterations = 4;
         [SerializeField, Range(0F, 1F)] private float noiseDensity = 0.6F;
 
-        protected override int[,] ComposeBehaviour(int[,] mat, int width, int height)
+        protected override Bimatrix ComposeBehaviour(Bimatrix bimatrix)
         {
-            mat = mat.Noise(Rand, noiseDensity);
+            bimatrix.Noisy(Rand, noiseDensity);
             for (int it = 0; it < iterations; it++)
             {
-                int[,] buffer = mat.Copy();
-                for (int i = 0; i < width; i++)
-                    for (int j = 0; j < height; j++)
+                Bimatrix buffer = bimatrix.Copy();
+                for (int i = 0; i < bimatrix.Width; i++)
+                    for (int j = 0; j < bimatrix.Height; j++)
                     {
-                        var neighbours = buffer.GetNeighborhood(i, j);
-                        var walls = neighbours.FindAll(i => i == Block);
-                        mat[i, j] = walls.Count() > 4 ? Block : Empty;
+                        var neighbours = buffer.GetNeighbours(i, j);
+                        var walls = neighbours.FindAll(i => buffer[i] == Block).Count + (8 - neighbours.Count);
+                        bimatrix[i, j] = walls > 4 ? Block : Empty;
                     }
             }
-            return mat;
+            return bimatrix;
         }
     }
 }

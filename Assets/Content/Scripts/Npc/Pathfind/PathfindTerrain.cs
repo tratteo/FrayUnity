@@ -49,7 +49,7 @@ namespace Fray.Npc.Pathfinding
             return cells[coordX, coordY];
         }
 
-        public void Generate()
+        public void Bake()
         {
             cells = new Cell[size.x, size.y];
             for (int x = 0; x < size.x; x++)
@@ -140,7 +140,7 @@ namespace Fray.Npc.Pathfinding
             {
                 terrainsDict.Add((int)Mathf.Log(t.Mask.value, 2), t);
             }
-            if (generateOnAwake) Generate();
+            if (generateOnAwake) Bake();
         }
 
         private void BlurPenaltyMap(int blurSize)
